@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { gsap } from "gsap";
 
 //E preciso criar a cena, camera, renderizador para o THREE JS Inicial e basico
 // Cena
@@ -46,17 +47,35 @@ const circle = new THREE.Mesh(circleGeometry, materialStandart);
 
 plane.position.set(1, 1, 1);
 circle.position.set(1, -1, 1);
+cube.position.set(-2, 1, -2);
 
 scene.add(cube, plane, circle, light); // Adiciona o cubo a cena, mas nao renderiza
 
-function animate() {
-  // Animacao
-  requestAnimationFrame(animate);
-  cube.rotation.y += 0.01;
-  plane.rotation.y += 0.02;
-  circle.rotation.y += 0.03;
+const cloack = new THREE.Clock();
+function animation() {
+  // Animacao manualmente
+  requestAnimationFrame(animation);
+
+  const elapsedTime = cloack.getElapsedTime(); // O tempo de 60s
+  cube.rotation.x = Math.sin(elapsedTime) * 2; // Seno para fazer a animacao. Atraves do tempo, ele muda, que nem uma senoide telefonica
+  cube.rotation.y = Math.sin(elapsedTime) * 2; // Seno para fazer a animacao. Atraves do tempo, ele muda, que nem uma senoide telefonica
+
+  const scale = Math.sin(elapsedTime) * 0.5 + 1; // Seno, muda atraves do tempo, com o que esta multiplicando sendo o valor da expansao. O + representa o valor limite minimo que ele pode diminuir
+  cube.scale.set(scale, scale, scale); // muda a escala de todos os eixos
+
+  plane.material.transparent = true;
+  plane.material.opacity = Math.sin(elapsedTime + 3) * 0.5;
+
   renderer.render(scene, camera);
 }
 
-animate();
-animateCube();
+gsap.to(circle.position, {
+  // Gsap e o padrao para animacoes
+  y: Math.PI * 2,
+  duration: 2,
+  ease: "power2.inOut",
+  repeat: -1,
+  yoyo: true,
+});
+
+animation();
