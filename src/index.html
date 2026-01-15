@@ -8,9 +8,30 @@
             body {
                 margin: 0;
             }
+
+            canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                z-index: -1;
+            }
+
+            h1 {
+                color: blue;
+            }
         </style>
     </head>
     <body>
-        <script src="js/script2.js" type="module"></script>
+        <script src="js/script3.js" type="module"></script>
+        <canvas id="three-canvas"></canvas>
+
+        <main>
+            <section>
+                <h1>Titulo</h1>
+                <p>Normal</p>
+            </section>
+
+            <button id="botao">Click Me</button>
+        </main>
     </body>
 </html>
