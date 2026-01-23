@@ -50,6 +50,7 @@ const circle = new THREE.Mesh(circleGeometry, materialStandart);
 plane.position.set(1, 1, 1);
 circle.position.set(1, -1, 1);
 cube.position.set(-2, 1, -2);
+cube.material;
 
 scene.add(cube, plane, circle, light); // Adiciona o cubo a cena, mas nao renderiza
 
@@ -65,11 +66,18 @@ function animation() {
   const scale = Math.sin(elapsedTime) * 0.5 + 1; // Seno, muda atraves do tempo, com o que esta multiplicando sendo o valor da expansao. O + representa o valor limite minimo que ele pode diminuir
   cube.scale.set(scale, scale, scale); // muda a escala de todos os eixos
 
-  plane.material.transparent = true;
+  plane.material.transparent = false;
   plane.material.opacity = Math.sin(elapsedTime + 3) * 0.5;
 
   renderer.render(scene, camera);
 }
+
+// FORMA DE MOVER OS OBJETOS JUNTO AO SCROLL
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY; // PEGA O VALOR DE SCROLLY PARA FAZER O CALCULO ABAIXO
+  cube.position.y = scrollY * 0.005;
+  plane.position.y = scrollY * 0.005;
+});
 
 gsap.to(circle.position, {
   // Muda a position.y dele
@@ -90,6 +98,12 @@ button.addEventListener("mouseenter", () => {
     ease: "power2.inOut",
     repeat: -1,
     yoyo: true,
+  });
+});
+
+button.addEventListener("click", () => {
+  gsap.to(cube.material.color, {
+    set: Math.random() * 0xff0000,
   });
 });
 

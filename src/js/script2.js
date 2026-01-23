@@ -70,6 +70,7 @@ function animation() {
 }
 
 gsap.to(circle.position, {
+  // Muda a position.y dele
   // Gsap e o padrao para animacoes
   y: Math.PI * 2,
   duration: 2,
