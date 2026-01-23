@@ -69,6 +69,14 @@ window.addEventListener("scroll", () => {
   plane.position.y = scrollY * 0.005;
 });
 
+window.addEventListener("mousemove", (event) => {
+  const x = event.clientX / window.innerWidth - 0.5;
+  const y = event.clientY / window.innerHeight - 0.5;
+
+  cube.rotation.y = x;
+  cube.rotation.x = y;
+});
+
 // **ATENCAO** E NECESSARIO O ANIMATE PARA FUNCIONAR QUALQUER TIPO DE ANIMACAO, SEM ELE O GSAP SOZINHO NAO FUNCIONA
 gsap.to(circle.position, {
   // Muda a position.y dele
@@ -78,6 +86,16 @@ gsap.to(circle.position, {
   ease: "power2.inOut",
   repeat: -1,
   yoyo: true,
+});
+
+gsap.to(cube.position, {
+  y: -2,
+  scrollTrigger: {
+    trigger: "#quarta",
+    start: "top top",
+    end: "bottom bottom",
+    scrub: true,
+  },
 });
 
 const button = document.querySelector("#botao");
