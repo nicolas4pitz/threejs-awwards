@@ -45,7 +45,8 @@ function animate() {
 }
 
 const tlOne = gsap.timeline({
-  // Timeline usa para criar o scrollTrigger e guardar em uma var para poder resgatar mais tarde e modificar, ou seja, sempre que quiser modificar usando essa div como ref, basta usar chamando com o gsap.to
+  // Timeline usa para criar o scrollTrigger e guardar em uma var para poder resgatar mais tarde e modificar, ou seja,
+  // sempre que quiser modificar usando essa div como ref, basta usar chamando com o gsap.to
   scrollTrigger: {
     trigger: ".diver-one",
     start: "top",
