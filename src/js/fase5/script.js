@@ -27,20 +27,24 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 //OBJS
 //
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+const ambient = new THREE.AmbientLight(0xffffff, 1);
+ambient.position.set(2, 2, -200)
 const direcional = new THREE.DirectionalLight(0xffffff, 1);
 direcional.target.position.set(0, 0, 0);
-scene.add(direcional.target);
-direcional.position.set(1, 1, 1);
+direcional.position.set(0, 0, 0);
 
 const helper = new THREE.DirectionalLightHelper(direcional, 1);
 scene.add(helper);
 
 const planeGeometry = new THREE.PlaneGeometry(3, 3, 32, 32);
 
-const materialCinza = new THREE.MeshStandardMaterial({
-  color: 0x404040,
+const mat = new THREE.MeshBasicMaterial({
+  color: 0xFFFFFF,
   side: THREE.DoubleSide,
+})
+
+const material = new THREE.MeshStandardMaterial({
+  color: '#8fe970',
   roughness: 0.5,
   metalness: 0.2,
 });
@@ -49,20 +53,19 @@ const materialFundo = new THREE.MeshBasicMaterial({
   color: 0x000000,
 });
 
-const plane = new THREE.Mesh(planeGeometry, materialCinza);
+const plane = new THREE.Mesh(planeGeometry, material);
 
 const fundo = new THREE.Mesh(
   new THREE.PlaneGeometry(10, 10, 64, 64),
   materialFundo,
 );
 
-fundo.position.set(500, 500, 500);
+fundo.position.set(500, 500, 500)
 
-scene.add(fundo);
 
-plane.position.set(0, 0, -10);
+plane.position.set(0, 0, -2);
 
-scene.add(plane, ambient, direcional);
+scene.add(plane, direcional, ambient);
 
 function animate() {
   requestAnimationFrame(animate);
