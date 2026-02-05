@@ -44,8 +44,8 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-gsap.to(cube.position, {
-  x: 2,
+const tlOne = gsap.timeline({
+  // Timeline usa para criar o scrollTrigger e guardar em uma var para poder resgatar mais tarde e modificar, ou seja, sempre que quiser modificar usando essa div como ref, basta usar chamando com o gsap.to
   scrollTrigger: {
     trigger: ".diver-one",
     start: "top",
@@ -55,10 +55,9 @@ gsap.to(cube.position, {
   },
 });
 
-gsap.to(cube.rotation, {
-  y: 3.1,
+const tlTwo = gsap.timeline({
   scrollTrigger: {
-    trigger: ".diver-two",
+    trigger: ".diver-Two",
     start: "top",
     end: "bottom",
     scrub: true,
@@ -66,10 +65,7 @@ gsap.to(cube.rotation, {
   },
 });
 
-gsap.to(cube.scale, {
-  x: 2,
-  y: 2,
-  z: 2,
+const tlThree = gsap.timeline({
   scrollTrigger: {
     trigger: ".diver-three",
     start: "top",
@@ -77,6 +73,20 @@ gsap.to(cube.scale, {
     scrub: true,
     markers: true,
   },
+});
+
+tlOne.to(cube.position, {
+  x: 2,
+});
+
+tlTwo.to(cube.scale, {
+  x: 2,
+  y: 2,
+  z: 2,
+});
+
+tlThree.to(cube.rotation, {
+  y: 3.1,
 });
 
 animate();
