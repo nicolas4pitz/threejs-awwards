@@ -38,6 +38,8 @@ scene.add(helper);
 
 const planeGeometry = new THREE.PlaneGeometry(3, 3, 32, 32);
 
+const boxGeometry = new THREE.BoxGeometry(2, 2);
+
 const mat = new THREE.MeshBasicMaterial({
   color: 0xFFFFFF,
   side: THREE.DoubleSide,
@@ -54,6 +56,8 @@ const materialFundo = new THREE.MeshBasicMaterial({
 });
 
 const plane = new THREE.Mesh(planeGeometry, material);
+const box = new THREE.Mesh(boxGeometry, material);
+
 
 const fundo = new THREE.Mesh(
   new THREE.PlaneGeometry(10, 10, 64, 64),
@@ -64,6 +68,7 @@ fundo.position.set(500, 500, 500)
 
 
 plane.position.set(0, 0, -2);
+box.position.set(5, 0, -2)
 
 scene.add(plane, direcional, ambient);
 
