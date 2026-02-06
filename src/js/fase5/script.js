@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +16,11 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000,
 );
+
+const controls = new OrbitControls(camera, document.querySelector("#three-canvas"))
+controls.target.set(0, 5, 0)
+controls.update()
+
 camera.position.z = 5;
 //Renderer
 const renderer = new THREE.WebGLRenderer({

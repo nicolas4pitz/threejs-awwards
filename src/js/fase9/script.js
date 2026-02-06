@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import gsap from "gsap";
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 
 // Scene
 const scene = new THREE.Scene();
@@ -12,6 +13,8 @@ const camera = new THREE.PerspectiveCamera(
   1000,
 );
 camera.position.z = 5;
+
+
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
