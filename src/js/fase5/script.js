@@ -27,11 +27,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 //OBJS
 //
 
-const ambient = new THREE.AmbientLight(0xffffff, 1);
-ambient.position.set(2, 2, -200)
+const ambient = new THREE.AmbientLight("#ff2255", 1);
+ambient.position.set(-5, 2, 0)
+
+
 const direcional = new THREE.DirectionalLight(0xffffff, 1);
-direcional.target.position.set(0, 0, 0);
-direcional.position.set(0, 0, 0);
+direcional.target.position.set(2, 0, 0);
+direcional.position.set(-2, 2, 0);
 
 const helper = new THREE.DirectionalLightHelper(direcional, 1);
 scene.add(helper);
@@ -51,12 +53,26 @@ const material = new THREE.MeshStandardMaterial({
   metalness: 0.2,
 });
 
+const material2 = new THREE.MeshStandardMaterial({
+  color: '#f3D812',
+  roughness: 0.5,
+  metalness: 0.2,
+});
+
+const material3 = new THREE.MeshStandardMaterial({
+  color: '#f23e90',
+  roughness: 0.5,
+  metalness: 0.2,
+});
+
 const materialFundo = new THREE.MeshBasicMaterial({
   color: 0x000000,
 });
 
 const plane = new THREE.Mesh(planeGeometry, material);
 const box = new THREE.Mesh(boxGeometry, material);
+const box2 = new THREE.Mesh(boxGeometry, material2)
+const box3 = new THREE.Mesh(boxGeometry, material3)
 
 
 const fundo = new THREE.Mesh(
@@ -67,10 +83,12 @@ const fundo = new THREE.Mesh(
 fundo.position.set(500, 500, 500)
 
 
-plane.position.set(0, 0, -2);
-box.position.set(5, 0, -2)
+plane.position.set(0, -2, -2);
+box.position.set(5, -2, -2)
+box2.position.set(0, 2, -2)
+box3.position.set(-5, 1, -2)
 
-scene.add(plane, direcional, ambient);
+scene.add(plane, box, box2, box3, direcional, ambient);
 
 function animate() {
   requestAnimationFrame(animate);
