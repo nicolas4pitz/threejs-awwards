@@ -1,5 +1,7 @@
 import * as THREE from "three";
 
+//Cria os objetos, nao necessariamente relacionada a uma scene especifica
+
 export function createBox() {
   const geometry = new THREE.BoxGeometry();
   const material = new THREE.MeshStandardMaterial({

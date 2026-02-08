@@ -23,3 +23,16 @@ export function rotationMesh(mesh) {
     yoyo: true,
   });
 }
+
+export function sucessionTimeline(mesh, mesh2, mesh3) {
+  let tl1 = gsap.timeline({
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 1,
+  });
+
+  tl1
+    .to(mesh.position, { duration: 1, y: 5 })
+    .to(mesh2.position, { duration: 3, y: 5 })
+    .to(mesh3.position, { duration: 2, y: 5 });
+}
