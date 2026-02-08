@@ -1,11 +1,15 @@
 import * as THREE from "three";
 
 export function createBox() {
-  const geometry = new THREE.BoxGeometry(1, 1, 1);
+  const geometry = new THREE.BoxGeometry();
   const material = new THREE.MeshStandardMaterial({
     color: "#f89504",
   });
 
   const box = new THREE.Mesh(geometry, material);
   return box;
+}
+
+export function mudarMeshPosition(mesh, x = 0, y = 0, z = 0) {
+  mesh.position.set(x, y, z);
 }
