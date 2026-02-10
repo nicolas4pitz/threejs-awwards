@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { createBox } from "./objects";
+import { createBox, createPlane } from "./objects";
 import { mudarMeshPosition } from "./objects";
 import gsap from "gsap/src/all";
 import { rotationMesh } from "../animations/transitions";
@@ -31,10 +31,14 @@ export function initWorld(scene) {
   const box2 = createBox();
   const box3 = createBox();
 
+  const plane = createPlane(5, 5, 2, 2, "#08b959");
+
   mudarMeshPosition(box, 2, 0, 0);
   mudarMeshPosition(box3, -2, 0, 0);
+  mudarMeshPosition(plane, 0, -4, 0);
   //rotationMesh(box);
   sucessionTimeline(box, box2, box3);
+
 
   scene.add(box, box2, box3);
 
