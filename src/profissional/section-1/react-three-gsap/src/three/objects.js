@@ -14,11 +14,11 @@ export function createBox() {
 
 export function createPlane(width = 1, height = 1, wSegments = 1, hSegments = 1, material = "#f89504"){
   const geometry = new THREE.PlaneGeometry(width, height, wSegments, hSegments);
-  const material = new THREE.MeshStandardMaterial({
+  const materialMesh = new THREE.MeshStandardMaterial({
     color: material
   })
 
-  const plane = new THREE.Mesh(geometry, material)
+  const plane = new THREE.Mesh(geometry, materialMesh)
   return plane
 }
 
