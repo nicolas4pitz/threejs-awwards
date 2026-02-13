@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { createDirectLight, mudarDirecaoDirectLight, mudarPosicaoDirectLight } from "./lights";
+import { createAmbientLight, createDirectLight, mudarDirecaoDirectLight, mudarPosicaoDirectLight } from "./lights";
 import { createBox, createPlane } from "./objects";
 import { mudarMeshPosition } from "./objects";
 import gsap from "gsap/src/all";
@@ -27,25 +27,35 @@ export function initThree(canvas) {
 }
 
 export function initWorld(scene) {
+  
+  
+  
+  
   // Inicia o mundo dentro da scene em especifica
   const box = createBox();
   const box2 = createBox();
   const box3 = createBox();
 
+
+
   const plane = createPlane(5, 5, 2, 2, "#08b959");
 
   const light = createDirectLight();
+  const ambientLight = createAmbientLight("#ffffff", 0.2);
 
+  const helper = new THREE.DirectionalLightHelper(light, 1);
+  
   mudarMeshPosition(box, 2, 0, 0);
   mudarMeshPosition(box3, -2, 0, 0);
-  mudarMeshPosition(plane, 0, -4, 0);
+  mudarMeshPosition(plane, 0, -4, -1);
   //rotationMesh(box);
   sucessionTimeline(box, box2, box3);
 
-  mudarDirecaoDirectLight(light, 0, 0, -1);
+  mudarDirecaoDirectLight(light, 0, 2, 0);
   mudarPosicaoDirectLight(light, 0, 0, 0);
+  mudarPosicaoDirectLight(ambientLight, 0, 10, 0)
 
-  scene.add(box, box2, box3, plane);
+  scene.add(box, box2, box3, plane, ambientLight, light, helper);
 
   return { box };
 }

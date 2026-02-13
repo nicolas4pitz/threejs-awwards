@@ -1,8 +1,11 @@
 import * as THREE from "three"
 
+export function createAmbientLight(color="#ffffff", intensity=1){
+    return new THREE.AmbientLight(color, intensity)
+}
 
-export function createDirectLight(light=1, intensity=1){
-    return new THREE.DirectionalLight(light, intensity);
+export function createDirectLight(color="#ffffff", intensity=1){
+    return new THREE.DirectionalLight(color, intensity);
 }
 
 export function mudarDirecaoDirectLight(luz, x, y, z){
