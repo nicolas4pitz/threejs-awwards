@@ -3,8 +3,10 @@ import { createAmbientLight, createDirectLight, mudarDirecaoLight, mudarPosicaoL
 import { createBox, createPlane } from "./objects";
 import { mudarMeshPosition } from "./objects";
 import gsap from "gsap/src/all";
-import { rotationMesh } from "../animations/transitions";
-import { sucessionTimeline } from "../animations/transitions";
+import { sucessionTimeline, scrool } from "../animations/transitions";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger)
 
 // Todas as mudancas do treejs fazer por aqui
 
@@ -32,6 +34,7 @@ export function initWorld(scene) {
   
   
   // Inicia o mundo dentro da scene em especifica
+  //Objetos
   const box = createBox();
   const box2 = createBox();
   const box3 = createBox();
@@ -42,20 +45,27 @@ export function initWorld(scene) {
   const ambientLight = createAmbientLight("#ffffff", 0.2);
 
   const helper = new THREE.DirectionalLightHelper(directLight, 1);
-  
+  //
+
+  // Positions / Rotations
   mudarMeshPosition(box, 2, 0, 0);
   mudarMeshPosition(box3, -2, 0, 0);
   mudarMeshPosition(plane, 0, -4, -1);
-  //rotationMesh(box);
-  sucessionTimeline(box, box2, box3);
 
   mudarPosicaoLight(directLight, -1.2, 0, 0);
-  
   mudarPosicaoLight(ambientLight, 10, 5, 0)
-  
   mudarRotationLight(directLight, 0, 0, 11)
+
+  //
+
+  // Transitions
+  sucessionTimeline(box, box2, box3);
+  scrool(plane)
+
+  //
 
   scene.add(box, box2, box3, plane, ambientLight, directLight, helper);
 
   return { box };
 }
+

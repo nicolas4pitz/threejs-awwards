@@ -1,7 +1,6 @@
 import { useEffect, useRef } from "react";
 import { initThree } from "../three/setupScene";
 import { initWorld } from "../three/setupScene";
-
 // Padrao para setar o threejs e iniciar o mundo baseada na cena que quer
 
 export default function ThreeCanvas() {

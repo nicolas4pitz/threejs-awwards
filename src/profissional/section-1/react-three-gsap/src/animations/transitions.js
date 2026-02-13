@@ -1,4 +1,7 @@
 import { gsap } from "gsap/src/all.js";
+import { ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger)
 
 export function rotationMesh(mesh) {
   gsap.to(mesh.rotation, {
@@ -22,6 +25,15 @@ export function rotationMesh(mesh) {
     repeat: -1,
     yoyo: true,
   });
+}
+
+export function scrool(mesh){
+  gsap.to(mesh.position, {
+    y: 2,
+    scroolTrigger: {
+      trigger: "#root"
+    }
+  })
 }
 
 export function sucessionTimeline(mesh, mesh2, mesh3) {
