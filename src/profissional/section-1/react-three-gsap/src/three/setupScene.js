@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { createAmbientLight, createDirectLight, mudarDirecaoDirectLight, mudarPosicaoDirectLight } from "./lights";
+import { createAmbientLight, createDirectLight, mudarDirecaoLight, mudarPosicaoLight, mudarRotationLight } from "./lights";
 import { createBox, createPlane } from "./objects";
 import { mudarMeshPosition } from "./objects";
 import gsap from "gsap/src/all";
@@ -38,10 +38,10 @@ export function initWorld(scene) {
 
   const plane = createPlane(5, 5, 2, 2, "#08b959");
 
-  const light = createDirectLight();
+  const directLight = createDirectLight();
   const ambientLight = createAmbientLight("#ffffff", 0.2);
 
-  const helper = new THREE.DirectionalLightHelper(light, 1);
+  const helper = new THREE.DirectionalLightHelper(directLight, 1);
   
   mudarMeshPosition(box, 2, 0, 0);
   mudarMeshPosition(box3, -2, 0, 0);
@@ -49,11 +49,13 @@ export function initWorld(scene) {
   //rotationMesh(box);
   sucessionTimeline(box, box2, box3);
 
-  mudarDirecaoDirectLight(light, 0, 2, 0);
-  mudarPosicaoDirectLight(light, 0, 0, 0);
-  mudarPosicaoDirectLight(ambientLight, 0, 10, 0)
+  mudarPosicaoLight(directLight, -1.2, 0, 0);
+  
+  mudarPosicaoLight(ambientLight, 10, 5, 0)
+  
+  mudarRotationLight(directLight, 0, 0, 11)
 
-  scene.add(box, box2, box3, plane, ambientLight, light, helper);
+  scene.add(box, box2, box3, plane, ambientLight, directLight, helper);
 
   return { box };
 }
