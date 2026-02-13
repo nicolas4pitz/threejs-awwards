@@ -36,8 +36,6 @@ export function initWorld(scene) {
   const box2 = createBox();
   const box3 = createBox();
 
-
-
   const plane = createPlane(5, 5, 2, 2, "#08b959");
 
   const light = createDirectLight();
