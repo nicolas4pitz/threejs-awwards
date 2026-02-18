@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { createAmbientLight, createDirectLight, mudarPosicaoLight, mudarRotationLight } from "./lights";
-import { createBox, createPlane } from "./objects";
+import { createBox, createPlane, createSphere } from "./objects";
 import { mudarMeshPosition } from "./actionsObjs";
 import gsap from "gsap/src/all";
 import { sucessionTimeline, scrool } from "../animations/transitions";
@@ -52,6 +52,11 @@ export function initWorld(scene) {
     color: "#451f8a"
   });
 
+  const sphere = createSphere({
+    color: "#a81a6b",
+    
+  })
+
   const directLight = createDirectLight();
   const ambientLight = createAmbientLight("#ffffff", 0.2);
 
@@ -75,7 +80,7 @@ export function initWorld(scene) {
 
   //
 
-  scene.add(box, box2, box3, plane, ambientLight, directLight, helper);
+  scene.add(box, box2, box3, plane, sphere, ambientLight, directLight, helper);
 
   return { box };
 }
