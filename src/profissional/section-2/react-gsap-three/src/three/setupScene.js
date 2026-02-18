@@ -18,7 +18,7 @@ export function initThree(canvas) {
   scene.background = "#808080";
   scene.fog = new THREE.Fog("#bb4433", 2, 15);
 
-  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
+  const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
   camera.position.z = 5;
 
   const renderer = new THREE.WebGLRenderer({
@@ -31,9 +31,6 @@ export function initThree(canvas) {
 }
 
 export function initWorld(scene) {
-  
-  
-  
   
   // Inicia o mundo dentro da scene em especifica
   //Objetos
