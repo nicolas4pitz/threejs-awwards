@@ -8,7 +8,7 @@ export default function ThreeCanvas() {
 
   useEffect(() => {
     const { scene, camera, renderer } = initThree(canvasRef.current);
-    const { box } = initWorld(scene);
+    initWorld(scene);
 
     function animate() {
       requestAnimationFrame(animate);

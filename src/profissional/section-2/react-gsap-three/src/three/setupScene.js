@@ -81,7 +81,5 @@ export function initWorld(scene) {
   //
 
   scene.add(box, box2, box3, plane, sphere, ambientLight, directLight, helper);
-
-  return { box };
 }
 
