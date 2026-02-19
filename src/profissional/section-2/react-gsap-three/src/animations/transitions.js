@@ -1,7 +1,15 @@
 import { gsap } from "gsap/src/all.js";
 import { ScrollTrigger } from "gsap/all";
+import ScrollSmoother from "gsap/ScrollSmoother.js";
 
-gsap.registerPlugin(ScrollTrigger);
+// gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+
+// const smoother = ScrollSmoother.create({
+//   wrapper: "#smooth-wrapper",
+//   content: "#smooth-content",
+//   smooth: 1.5,
+//   effects: true
+// })
 
 export function rotationMesh(mesh) {
   gsap.to(mesh.rotation, {
@@ -72,7 +80,7 @@ export function narrativeTimeline(mesh, luz, camera){
       trigger: "#about",
       start: "top center",
       end: "bottom center",
-      scrub: true
+      scrub: 1.2
     }
   })
 
@@ -84,7 +92,7 @@ export function narrativeTimeline(mesh, luz, camera){
       trigger: "#contact",
       start: "top center",
       end: "bottom center",
-      scrub: true
+      scrub: 1.2
     }
   })
 

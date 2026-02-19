@@ -10,10 +10,14 @@ function App() {
 
   return (
     <>
-      <ThreeCanvas />
-      <Home />
-      <About />
-      <Contact />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <ThreeCanvas />
+          <Home />
+          <About />
+          <Contact />
+        </div>
+      </div>
     </>
   );
 }
