@@ -30,26 +30,28 @@ let mixer;
 
 //Model
 
-const loader = new GLTFLoader();
-loader.load("/Soldier.glb", gltf => {
-  const model = gltf.scene;
+function initModel(){
+  const loader = new GLTFLoader();
+  loader.load("/Soldier.glb", gltf => {
+    const model = gltf.scene;
 
-  model.position.set(0, 0, 0)
-  model.scale.set(20, 20, 20)
-  
-  
-  scene.add(model)
+    model.position.set(0, 0, 0)
+    model.scale.set(20, 20, 20)
+    
+    
+    scene.add(model)
 
-  const animations = gltf.animations;
+    const animations = gltf.animations;
 
-  mixer = new THREE.AnimationMixer(model)
-  const walkAnimation = animations.find(animation => animation.name === "Walk")
-  if(walkAnimation){
-    const walkAction = mixer.clipAction(walkAnimation)
-    walkAction.play()
-  }
+    mixer = new THREE.AnimationMixer(model)
+    const walkAnimation = animations.find(animation => animation.name === "Walk")
+    if(walkAnimation){
+      const walkAction = mixer.clipAction(walkAnimation)
+      walkAction.play()
+    }
 
-})
+  })
+}
 
 //END MODEL
 
@@ -75,6 +77,8 @@ ground.position.y = -5
 ground.receiveShadow = true;
 scene.add(ground)
 
+const sphereGeometry = new THREE.SphereGeometry(5)
+
 const geometry = new THREE.BoxGeometry(10, 10, 10)
 const material = new THREE.MeshStandardMaterial({
   color: 0x2196f3,
@@ -87,6 +91,69 @@ cube.position.y += 5
 cube.castShadow = true
 cube.receiveShadow = true
 //scene.add(cube)
+
+function initPhongMeshs(){
+  for (let index = 0; index < 5; index++) {
+    const shinnes = index * 5
+
+    const material = new THREE.MeshPhongMaterial({
+      color: 0x45f974,
+      shininess: shinnes,
+      specular: 0xffffff
+    })
+
+    const mesh = new THREE.Mesh(sphereGeometry, material)
+    mesh.receiveShadow = true
+    mesh.castShadow = true
+    mesh.position.set(index * 10 - 20, 5, -32)
+    scene.add(mesh)
+    
+  }
+}
+
+function initMetallnesMeshs(){
+  for (let index = 0; index < 5; index++) {
+    const metalness = index / 4;
+
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x94aa19,
+      roughness: 0.0,
+      metalness: metalness
+    })
+
+    const mesh = new THREE.Mesh(sphereGeometry, material)
+    mesh.castShadow = true
+    mesh.receiveShadow = true
+    mesh.position.set(index * 10 - 20, 5, 32)
+    scene.add(mesh)
+    
+  }
+}
+
+function initRoughnessMeshs(){
+  for (let index = 0; index < 5; index++) {
+  const roughness = index / 4;
+
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x00ff00,
+    roughness: roughness,
+    metalness: 0.0
+  })
+
+  const mesh = new THREE.Mesh(sphereGeometry, material)
+  mesh.castShadow = true
+  mesh.receiveShadow = true
+  mesh.position.set(index * 10 - 20, 5, 0)
+  scene.add(mesh)
+  
+  }
+}
+
+initRoughnessMeshs()
+initMetallnesMeshs()
+initPhongMeshs()
+
+
 
 const clock = new THREE.Clock();
 
