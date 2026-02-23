@@ -1,10 +1,12 @@
 
 import * as THREE from "three"
-import { OrbitControls } from "three/examples/jsm/Addons.js"
+import { GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js"
+import { PMREMGenerator } from "three/webgpu"
 
 const canvas = document.querySelector("#webgl")
 
 const scene = new THREE.Scene()
+scene.fog = new THREE.FogExp2(0x000000, 0.002)
 
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 3000)
 camera.position.set(100, 100, 100)
@@ -24,7 +26,32 @@ renderer.setClearColor(0x262626)
 
 initLight()
 
+let mixer;
 
+//Model
+
+const loader = new GLTFLoader();
+loader.load("/Soldier.glb", gltf => {
+  const model = gltf.scene;
+
+  model.position.set(0, 0, 0)
+  model.scale.set(20, 20, 20)
+  
+  
+  scene.add(model)
+
+  const animations = gltf.animations;
+
+  mixer = new THREE.AnimationMixer(model)
+  const walkAnimation = animations.find(animation => animation.name === "Walk")
+  if(walkAnimation){
+    const walkAction = mixer.clipAction(walkAnimation)
+    walkAction.play()
+  }
+
+})
+
+//END MODEL
 
 
 const controls = new OrbitControls(camera, renderer.domElement)
@@ -59,13 +86,15 @@ const cube = new THREE.Mesh(geometry, material)
 cube.position.y += 5
 cube.castShadow = true
 cube.receiveShadow = true
-scene.add(cube)
+//scene.add(cube)
+
+const clock = new THREE.Clock();
 
 function animate(){
   requestAnimationFrame(animate)
+  const delta = clock.getDelta()
+  mixer?.update(delta)
   controls.update()
-  cube.rotation.x += 0.01
-  cube.rotation.y += 0.01
   renderer.render(scene, camera)
 }
 
