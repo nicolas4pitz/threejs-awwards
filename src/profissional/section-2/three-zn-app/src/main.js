@@ -1,16 +1,16 @@
 
 import * as THREE from "three"
 import { GLTFLoader, OrbitControls } from "three/examples/jsm/Addons.js"
+import { sin } from "three/tsl"
 import { PMREMGenerator } from "three/webgpu"
 
 const canvas = document.querySelector("#webgl")
 
 const scene = new THREE.Scene()
-scene.fog = new THREE.FogExp2(0x000000, 0.002)
 
 const camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 3000)
-camera.position.set(100, 100, 100)
-camera.lookAt(0, 0, 0);
+camera.position.set(0, 0, 70)
+camera.lookAt(0, 5, 0);
 
 const renderer = new THREE.WebGLRenderer({
   antialias: true,
@@ -22,7 +22,7 @@ renderer.setSize(window.innerWidth, window.innerHeight)
 renderer.outputColorSpace = THREE.SRGBColorSpace
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setClearColor(0x262626)
+renderer.setClearColor(0xf2f2f2)
 
 initLight()
 
@@ -30,40 +30,35 @@ let mixer;
 
 //Model
 
+let model;
+let model2;
+let model3;
+let model4;
+
 function initModel(){
   const loader = new GLTFLoader();
-  loader.load("/Soldier.glb", gltf => {
-    const model = gltf.scene;
-
-    model.position.set(0, 0, 0)
-    model.scale.set(20, 20, 20)
-    
-    
+  loader.load("/nike.glb", gltf => {
+    model = gltf.scene;
+    model.position.set(0, 5, 0)
+    model.scale.set(5, 5, 5)
+    model.rotation.x = 0.2;
     scene.add(model)
-
-    const animations = gltf.animations;
-
-    mixer = new THREE.AnimationMixer(model)
-    const walkAnimation = animations.find(animation => animation.name === "Walk")
-    if(walkAnimation){
-      const walkAction = mixer.clipAction(walkAnimation)
-      walkAction.play()
-    }
-
   })
 }
+
+initModel()
 
 //END MODEL
 
 
-const controls = new OrbitControls(camera, renderer.domElement)
-controls.target.set(0, 0, 0)
-controls.update();
+// const controls = new OrbitControls(camera, renderer.domElement)
+// controls.target.set(0, 0, 0)
+// controls.update();
 
 //Helper para lidar com os objetos em cena
-const axesHelper = new THREE.AxesHelper(30)
-const gridHelper = new THREE.GridHelper(50, 10)
-scene.add(axesHelper, gridHelper)
+// const axesHelper = new THREE.AxesHelper(30)
+// const gridHelper = new THREE.GridHelper(50, 10)
+// scene.add(axesHelper, gridHelper)
 
 const geometryPlane = new THREE.PlaneGeometry(1000, 1000)
 const materialPlane = new THREE.MeshStandardMaterial({
@@ -71,11 +66,12 @@ const materialPlane = new THREE.MeshStandardMaterial({
   roughness: 0.8,
   metalness: 0.0
 })
-const ground = new THREE.Mesh(geometryPlane, materialPlane)
-ground.rotation.x = -Math.PI / 2
-ground.position.y = -5
-ground.receiveShadow = true;
-scene.add(ground)
+
+// const ground = new THREE.Mesh(geometryPlane, materialPlane)
+// ground.rotation.x = -Math.PI / 2
+// ground.position.y = -5
+// ground.receiveShadow = true;
+// scene.add(ground)
 
 const sphereGeometry = new THREE.SphereGeometry(5)
 
@@ -149,19 +145,23 @@ function initRoughnessMeshs(){
   }
 }
 
-initRoughnessMeshs()
-initMetallnesMeshs()
-initPhongMeshs()
 
-
+const speed = 1
+const radius = 95
 
 const clock = new THREE.Clock();
 
 function animate(){
   requestAnimationFrame(animate)
   const delta = clock.getDelta()
+  const elapsed = clock.getElapsedTime();
   mixer?.update(delta)
-  controls.update()
+  if (model) {
+    model.position.x = radius * Math.cos(elapsed * speed);
+    model.position.z = radius * Math.sin(elapsed * speed);
+    model.rotation.y += 0.0005;
+  }
+  //controls.update()
   renderer.render(scene, camera)
 }
 
@@ -171,11 +171,9 @@ animate()
 
 
 function initLight(){
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-  scene.add(ambientLight)
-
-  const sunLight = new THREE.DirectionalLight(0xffffff, 1.5)
-  sunLight.position.set(10, 10, 10)
+  
+  const sunLight = new THREE.DirectionalLight(0xffffff, 2.0)
+  sunLight.position.set(0, 5, 70)
   sunLight.castShadow = true;
   sunLight.shadow.mapSize.width = 1024
   sunLight.shadow.mapSize.height = 1024
@@ -185,4 +183,8 @@ function initLight(){
   sunLight.shadow.camera.top = d;
   sunLight.shadow.camera.bottom = -d;
   scene.add(sunLight)
+
+  const cameraLight = new THREE.AmbientLight(0xffffff, 1.2)
+  cameraLight.position.set(0, 0, 70)
+  scene.add(cameraLight)
 }
